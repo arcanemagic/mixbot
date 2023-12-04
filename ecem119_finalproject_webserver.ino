@@ -27,12 +27,14 @@ int led =  LED_BUILTIN;
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
 
+float time_connected = 0; 
+
 void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+//  while (!Serial) {
+//    ; // wait for serial port to connect. Needed for native USB port only
+//  }
 
   Serial.println("Access Point Web Server");
 
@@ -97,73 +99,90 @@ void loop() {
   if (client) {                             // if you get a client,
     Serial.println("new client");           // print a message out the serial port
     String currentLine = "";                // make a String to hold incoming data from the client
-    while (client.connected()) {            // loop while the client's connected
+    while (client.connected()) 
+    {            // loop while the client's connected
       delayMicroseconds(10);                // This is required for the Arduino Nano RP2040 Connect - otherwise it will loop so fast that SPI will never be served.
-      if (client.available()) {             // if there's bytes to read from the client,
+      if (client.available()) 
+      {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
         Serial.write(c);                    // print it out to the serial monitor
-        if (c == '\n') {                    // if the byte is a newline character
+        if (c == '\n') 
+        {                    // if the byte is a newline character
 
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
-          if (currentLine.length() == 0) {
+          if (currentLine.length() == 0) 
+          {
             // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
             // and a content-type so the client knows what's coming, then a blank line:
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
+            client.println("Connection: Keep-Alive"); 
+            client.println("Set-Cookie: userid=someuserid"); 
             client.println();
 
             // the content of the HTTP response follows the header:
+             
+            client.print("You have visited the page " + String(time_connected) + " times<br>"); 
             client.print("Click <a href=\"/H\">here</a> turn the LED on<br>");
             client.print("Click <a href=\"/L\">here</a> turn the LED off<br>");
-            client.print("Click <a href=\"/1\">here</a> for drink 1<br>");
-            client.print("Click <a href=\"/2\">here</a> for drink 2<br>");
-            client.print("Click <a href=\"/3\">here</a> for drink 3<br>");
-            client.print("Click <a href=\"/4\">here</a> for drink 4<br>");
+            client.print("Click <a href=\"/1-1-1-1\">here</a> for drink 1<br>");
+            client.print("Click <a href=\"/1-2-3-4\">here</a> for drink 2<br>");
+            client.print("Click <a href=\"/3-3-4-4\">here</a> for drink 3<br>");
+            client.print("Click <a href=\"/2-2-3-4\">here</a> for drink 4<br>");
 
             // The HTTP response ends with another blank line:
             client.println();
+            time_connected++;
             // break out of the while loop:
             break;
           }
-          else {      // if you got a newline, then clear currentLine:
+          else 
+          {      // if you got a newline, then clear currentLine:
             currentLine = "";
           }
         }
-        else if (c != '\r') {    // if you got anything else but a carriage return character,
+        else if (c != '\r') 
+        {    // if you got anything else but a carriage return character,
           currentLine += c;      // add it to the end of the currentLine
         }
 
         // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /H")) {
+        if (currentLine.endsWith("GET /H")) 
+        {
           digitalWrite(led, HIGH);               // GET /H turns the LED on
         }
-        if (currentLine.endsWith("GET /L")) {
+        if (currentLine.endsWith("GET /L")) 
+        {
           digitalWrite(led, LOW);                // GET /L turns the LED off
         }
-        if (currentLine.endsWith("GET /1")) {
-          Serial.println("drink 1"); 
+        if (currentLine.endsWith("GET /1-1-1-1")) 
+        {
+//          Serial.println("drink 1"); 
           digitalWrite(led, HIGH);  // Debugging 
           // TODO: pour drink 1 into cup 
         }
-        else if (currentLine.endsWith("GET /2")) {
-          Serial.println("drink 1"); 
+        else if (currentLine.endsWith("GET /1-2-3-4")) 
+        {
+//          Serial.println("drink 2"); 
           // TODO: pour drink 2 into cup 
         }
-        else if (currentLine.endsWith("GET /3")) {
-          Serial.println("drink 1"); 
+        else if (currentLine.endsWith("GET /3-3-4-4")) 
+        {
+//          Serial.println("drink 3"); 
          // TODO: pour drink 3 into cup 
         }
-        else if (currentLine.endsWith("GET /4")) {
-          Serial.println("drink 1"); 
+        else if (currentLine.endsWith("GET /2-2-3-4"))
+        {
+//          Serial.println("drink 4"); 
           // TODO: pour drink 4 into cup 
         }
         
       }
     }
-    // close the connection:
-    client.stop();
-    Serial.println("client disconnected");
+//    // close the connection:
+//    client.stop();
+//    Serial.println("client disconnected");
   }
 }
 
