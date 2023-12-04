@@ -32,55 +32,55 @@ std::string indexhtml = R"(<!DOCTYPE html>
 
      <form method="get" action="" enctype="text/plain">
         <p>Drink 1:</p>
-        <input type="radio" id="measurement1" name="drink1" value="measurement1">
-        <label for="measurement1">Measurement 1</label><br>
-        <input type="radio" id="measurement2" name="drink1" value="measurement2">
-        <label for="measurement2">Measurement 2</label><br>
-        <input type="radio" id="measurement3" name="drink1" value="measurement3">
-        <label for="measurement3">Measurement 3</label><br>
-        <input type="radio" id="measurement4" name="drink1" value="measurement4">
-        <label for="measurement4">Measurement 4</label><br>
+        <input type="radio" id="0" name="drink1" value="0">
+        <label for="0">0</label><br>
+        <input type="radio" id="2" name="drink1" value="2">
+        <label for="2">2</label><br>
+        <input type="radio" id="4" name="drink1" value="4">
+        <label for="4">4</label><br>
+        <input type="radio" id="6" name="drink1" value="6">
+        <label for="6">6</label><br>
 
         <br>
 
         <p>Drink 2</p>
-        <input type="radio" id="measurement1" name="drink2" value="measurement1">
-        <label for="measurement1">Measurement 1</label><br>
-        <input type="radio" id="measurement2" name="drink2" value="measurement2">
-        <label for="measurement2">Measurement 2</label><br>
-        <input type="radio" id="measurement3" name="drink2" value="measurement3">
-        <label for="measurement3">Measurement 3</label><br>
-        <input type="radio" id="measurement4" name="drink2" value="measurement4">
-        <label for="measurement4">Measurement 4</label><br>
+        <input type="radio" id="0" name="drink2" value="0">
+        <label for="0">0</label><br>
+        <input type="radio" id="2" name="drink2" value="2">
+        <label for="2">2</label><br>
+        <input type="radio" id="4" name="drink2" value="4">
+        <label for="4">4</label><br>
+        <input type="radio" id="6" name="drink2" value="6">
+        <label for="6">6</label><br>
 
         <br>
 
         <p>Drink 3:</p>
-        <input type="radio" id="measurement1" name="drink3" value="measurement1">
-        <label for="measurement1">Measurement 1</label><br>
-        <input type="radio" id="measurement2" name="drink3" value="measurement2">
-        <label for="measurement2">Measurement 2</label><br>
-        <input type="radio" id="measurement3" name="drink3" value="measurement3">
-        <label for="measurement3">Measurement 3</label><br>
-        <input type="radio" id="measurement4" name="drink3" value="measurement4">
-        <label for="measurement4">Measurement 4</label><br>
+        <input type="radio" id="0" name="drink3" value="0">
+        <label for="0">0</label><br>
+        <input type="radio" id="2" name="drink3" value="2">
+        <label for="2">2</label><br>
+        <input type="radio" id="4" name="drink3" value="4">
+        <label for="4">4</label><br>
+        <input type="radio" id="6" name="drink3" value="6">
+        <label for="6">6</label><br>
         
         <br>
 
         <p>Drink 4:</p>
-        <input type="radio" id="measurement1" name="drink4" value="measurement1">
-        <label for="measurement1">Measurement 1</label><br>
-        <input type="radio" id="measurement2" name="drink4" value="measurement2">
-        <label for="measurement2">Measurement 2</label><br>
-        <input type="radio" id="measurement3" name="drink4" value="measurement3">
-        <label for="measurement3">Measurement 3</label><br>
-        <input type="radio" id="measurement4" name="drink4" value="measurement4">
-        <label for="measurement4">Measurement 4</label><br>
+        <input type="radio" id="0" name="drink4" value="0">
+        <label for="0">0</label><br>
+        <input type="radio" id="2" name="drink4" value="2">
+        <label for="2">2</label><br>
+        <input type="radio" id="4" name="drink4" value="4">
+        <label for="4">4</label><br>
+        <input type="radio" id="6" name="drink4" value="6">
+        <label for="6">6</label><br>
 
         <br>
 
-        <input type="submit" value="Submit" on Click="display()">
-        <input type=\"reset\" value=\"Clear Choices\">
+        <input type='submit' value='Submit' on Click='display()'>
+        <input type='reset' value='Clear Choices'>
     </form>
 
     </body>
