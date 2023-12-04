@@ -18,6 +18,14 @@
 
 #include <SPI.h>
 #include <WiFiNINA.h>
+#include <iostream> 
+#include <fstream> 
+#include "homepagehtml.h"
+#include "stylescss.h"
+
+using namespace std;  
+
+
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 char ssid[] = "cocktail";        // your network SSID (name)
 char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
@@ -76,6 +84,14 @@ void setup() {
 
   // you're connected now, so print out the status
   printWiFiStatus();
+
+  //Open the .html and .css files 
+
+  std::string homepage = indexhtml; 
+//  Serial.println(homepage.c_str()); 
+  std::string css = stylescss; 
+//  Serial.println(stylescss.c_str()); 
+
 }
 
 
@@ -122,14 +138,15 @@ void loop() {
             client.println();
 
             // the content of the HTTP response follows the header:
-             
-            client.print("You have visited the page " + String(time_connected) + " times<br>"); 
-            client.print("Click <a href=\"/H\">here</a> turn the LED on<br>");
-            client.print("Click <a href=\"/L\">here</a> turn the LED off<br>");
-            client.print("Click <a href=\"/1-1-1-1\">here</a> for drink 1<br>");
-            client.print("Click <a href=\"/1-2-3-4\">here</a> for drink 2<br>");
-            client.print("Click <a href=\"/3-3-4-4\">here</a> for drink 3<br>");
-            client.print("Click <a href=\"/2-2-3-4\">here</a> for drink 4<br>");
+
+             client.print(indexhtml.c_str()); 
+//            client.print("You have visited the page " + String(time_connected) + " times<br>"); 
+//            client.print("Click <a href=\"/H\">here</a> turn the LED on<br>");
+//            client.print("Click <a href=\"/L\">here</a> turn the LED off<br>");
+//            client.print("Click <a href=\"/1-1-1-1\">here</a> for drink 1<br>");
+//            client.print("Click <a href=\"/1-2-3-4\">here</a> for drink 2<br>");
+//            client.print("Click <a href=\"/3-3-4-4\">here</a> for drink 3<br>");
+//            client.print("Click <a href=\"/2-2-3-4\">here</a> for drink 4<br>");
 
             // The HTTP response ends with another blank line:
             client.println();
