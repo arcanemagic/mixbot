@@ -86,8 +86,8 @@ void setup() {
 
   //Open the .html and .css files 
 
-//  std::string homepage = indexhtml; 
-////  Serial.println(homepage.c_str()); 
+  std::string homepage = indexhtml; 
+  Serial.println(homepage.c_str()); 
 
 }
 
