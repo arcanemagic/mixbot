@@ -21,7 +21,6 @@
 #include <iostream> 
 #include <fstream> 
 #include "homepagehtml.h"
-#include "stylescss.h"
 
 using namespace std;  
 
@@ -87,10 +86,8 @@ void setup() {
 
   //Open the .html and .css files 
 
-  std::string homepage = indexhtml; 
-//  Serial.println(homepage.c_str()); 
-  std::string css = stylescss; 
-//  Serial.println(stylescss.c_str()); 
+//  std::string homepage = indexhtml; 
+////  Serial.println(homepage.c_str()); 
 
 }
 
