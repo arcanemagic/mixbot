@@ -165,31 +165,31 @@ void loop() {
         }
 
         // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /H")) 
+        if (currentLine.endsWith("GET /%22/H/%22"))
         {
           digitalWrite(led, HIGH);               // GET /H turns the LED on
         }
-        if (currentLine.endsWith("GET /L")) 
+        if (currentLine.endsWith("GET /%22/L/%22")) 
         {
           digitalWrite(led, LOW);                // GET /L turns the LED off
         }
-        if (currentLine.endsWith("GET /1-1-1-1")) 
+        if (currentLine.endsWith("GET /%22/1-1-1-1/%22")) 
         {
 //          Serial.println("drink 1"); 
           digitalWrite(led, HIGH);  // Debugging 
           // TODO: pour drink 1 into cup 
         }
-        else if (currentLine.endsWith("GET /1-2-3-4")) 
+        else if (currentLine.endsWith("GET /%22/1-2-3-4/%22")) 
         {
 //          Serial.println("drink 2"); 
           // TODO: pour drink 2 into cup 
         }
-        else if (currentLine.endsWith("GET /3-3-4-4")) 
+        else if (currentLine.endsWith("GET /%22/3-3-4-4%22/")) 
         {
 //          Serial.println("drink 3"); 
          // TODO: pour drink 3 into cup 
         }
-        else if (currentLine.endsWith("GET /2-2-3-4"))
+        else if (currentLine.endsWith("GET /%22/2-2-3-4/%22"))
         {
 //          Serial.println("drink 4"); 
           // TODO: pour drink 4 into cup 

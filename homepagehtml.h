@@ -4,12 +4,24 @@
 std::string indexhtml = R"(<!DOCTYPE html>
     <html>
     <head>
-    <link rel=\"stylesheet\" href=\"styles.css\">
+      <style>
+        body {
+          background-color: powderblue;
+        }
+          
+        h1 {
+            color: red;
+          }
+        
+        p {
+          color: black;
+        }
+        </style>
     </head>
     <body>
 
     <h1>Order Drinks Here</h1>
-    <p>Welcome!</p>
+    <h3>Welcome! Choose a drink or specify your own:</h3>
 
     Click <a href=\"/H\">here</a> turn the LED on<br>
     Click <a href=\"/L\">here</a> turn the LED off<br>
