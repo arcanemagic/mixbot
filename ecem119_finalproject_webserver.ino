@@ -20,9 +20,28 @@
 #include <WiFiNINA.h>
 #include <iostream> 
 #include <fstream> 
+#include <sstream>
+#include <regex>
 #include "homepagehtml.h"
 
 using namespace std;  
+
+// Motor A connections
+int enA = 9;
+int in1 = 8;
+int in2 = 7;
+// Motor B connections
+int enB = 3;
+int in3 = 5;
+int in4 = 4;
+// Motor C connections
+int enC = 16;
+int in5 = 15;
+int in6 = 14;
+// Motor D connections
+int enD = 19;
+int in7 = 20;
+int in8 = 21;
 
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
@@ -87,10 +106,50 @@ void setup() {
   //Open the .html and .css files 
 
   std::string homepage = indexhtml; 
-  Serial.println(homepage.c_str()); 
+//  Serial.println(homepage.c_str()); 
 
+
+    // Set all the motor control pins to outputs
+    pinMode(enA, OUTPUT);
+    pinMode(enB, OUTPUT);
+    pinMode(enC, OUTPUT);
+    pinMode(enD, OUTPUT);
+    pinMode(in1, OUTPUT);
+    pinMode(in2, OUTPUT);
+    pinMode(in3, OUTPUT);
+    pinMode(in4, OUTPUT);
+    pinMode(in5, OUTPUT);
+    pinMode(in6, OUTPUT);
+    pinMode(in7, OUTPUT);
+    pinMode(in8, OUTPUT);
+    
+    // Turn off motors - Initial state
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+    digitalWrite(in5, LOW);
+    digitalWrite(in6, LOW);
+    digitalWrite(in7, LOW);
+    digitalWrite(in8, LOW);
 }
 
+void parseGetRequest(std::string url)
+{
+  std::string delimiter = "&"; 
+  std::string s = url; 
+  std::string token = ""; 
+  unsigned int position = 0;
+  Serial.println("Parsing: ");
+  Serial.println(url.c_str()); 
+  while ((position = s.find(delimiter)) != std::string::npos) 
+  {
+    token = s.substr(0, position);
+    Serial.println(token.c_str());
+    s.erase(0, position + delimiter.length());
+  }
+  Serial.println("Finished parsing get request"); 
+}
 
 void loop() {
   // compare the previous status to the current status
@@ -118,7 +177,7 @@ void loop() {
       if (client.available()) 
       {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
-        Serial.write(c);                    // print it out to the serial monitor
+//        Serial.write(c);                    // print it out to the serial monitor
         if (c == '\n') 
         {                    // if the byte is a newline character
 
@@ -134,20 +193,13 @@ void loop() {
             client.println("Set-Cookie: userid=someuserid"); 
             client.println();
 
-            // the content of the HTTP response follows the header:
-
+            // the content of the HTTP response (the webpage) follows the header:
              client.print(indexhtml.c_str()); 
-//            client.print("You have visited the page " + String(time_connected) + " times<br>"); 
-//            client.print("Click <a href=\"/H\">here</a> turn the LED on<br>");
-//            client.print("Click <a href=\"/L\">here</a> turn the LED off<br>");
-//            client.print("Click <a href=\"/1-1-1-1\">here</a> for drink 1<br>");
-//            client.print("Click <a href=\"/1-2-3-4\">here</a> for drink 2<br>");
-//            client.print("Click <a href=\"/3-3-4-4\">here</a> for drink 3<br>");
-//            client.print("Click <a href=\"/2-2-3-4\">here</a> for drink 4<br>");
 
             // The HTTP response ends with another blank line:
             client.println();
             time_connected++;
+            
             // break out of the while loop:
             break;
           }
@@ -161,32 +213,50 @@ void loop() {
           currentLine += c;      // add it to the end of the currentLine
         }
 
+        std::string stdCurrentLine(currentLine.c_str()); 
+        std::regex regex_expr("(GET /\\?drink1)=[0-9]&drink2=[0-9]&drink3=[0-9]&drink4=[0-9] HTTP/1.1\r");
+        if(currentLine.startsWith("GET /?"))
+        {
+          
+            if (std::regex_match(stdCurrentLine, regex_expr)) 
+            {
+              Serial.println("Regex match!"); 
+              parseGetRequest(stdCurrentLine); 
+            }
+            else
+            {
+              Serial.println("No regex match for: "); 
+              Serial.println(currentLine); 
+            }
+        }
+
+        
         // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /%22/H/%22"))
+        if (currentLine.endsWith("GET /H"))
         {
           digitalWrite(led, HIGH);               // GET /H turns the LED on
         }
-        if (currentLine.endsWith("GET /%22/L/%22")) 
+        if (currentLine.endsWith("GET /L")) 
         {
           digitalWrite(led, LOW);                // GET /L turns the LED off
         }
-        if (currentLine.endsWith("GET /%22/1-1-1-1/%22")) 
+        if (currentLine.endsWith("GET /1-1-1-1")) 
         {
 //          Serial.println("drink 1"); 
           digitalWrite(led, HIGH);  // Debugging 
           // TODO: pour drink 1 into cup 
         }
-        else if (currentLine.endsWith("GET /%22/1-2-3-4/%22")) 
+        else if (currentLine.endsWith("GET /1-2-3-4")) 
         {
 //          Serial.println("drink 2"); 
           // TODO: pour drink 2 into cup 
         }
-        else if (currentLine.endsWith("GET /%22/3-3-4-4%22/")) 
+        else if (currentLine.endsWith("GET /3-3-4-4")) 
         {
 //          Serial.println("drink 3"); 
          // TODO: pour drink 3 into cup 
         }
-        else if (currentLine.endsWith("GET /%22/2-2-3-4/%22"))
+        else if (currentLine.endsWith("GET /2-2-3-4"))
         {
 //          Serial.println("drink 4"); 
           // TODO: pour drink 4 into cup 
