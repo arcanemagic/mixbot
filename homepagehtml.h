@@ -12,20 +12,27 @@ std::string indexhtml = R"(<!DOCTYPE html>
         h1 {
             color: DarkBlue;
             font-family: "Gill Sans Extrabold", sans-serif;
+            text-align:center;
           }
 
         h3 {
           font-family: Verdana, Geneva, sans-serif;
+          text-align:center;
         }
         
         p {
           color: black;
           font-family: Verdana, Geneva, sans-serif;
+          text-align:center;
         }
 
         #wrapper {
-          width: 100%; 
-          margin: 0 auto; 
+          width: 90vw; 
+          margin: auto; 
+        }
+
+        form {
+          text-align:center;
         }
 
 
@@ -37,7 +44,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
     <h1>Embedded Mixologist</h1>
     <h3>Welcome! Choose a drink:</h3>
 
-    <p>Click <a href="/?drink1=2&drink2=2&drink3=2&drink4=2">here</a> to order drink 1</p><br>
+    <p>Click <a href="/?drink1=2&drink2=2&drink3=2&drink4=2">here</a> to order drink 1</p>
     <p>Click <a href="/?drink1=2&drink2=4&drink3=4&drink4=6">here</a> to orderdrink 2</p><br>
 
     <h3>Or specify your own:</h3>
