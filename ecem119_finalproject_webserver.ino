@@ -55,6 +55,10 @@ WiFiServer server(80);
 
 float time_connected = 0; 
 
+struct DrinkOrder{
+ int amounts[4]; 
+};
+
 void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
@@ -134,21 +138,73 @@ void setup() {
     digitalWrite(in8, LOW);
 }
 
-void parseGetRequest(std::string url)
+int pourDrinks(DrinkOrder order)
 {
+  // TODO: turn on the motors for the appropriate durations 
+  // Each entry in order.amounts[i] represents the amount to pour 
+
+  // Turn on the LED to indicate we're working on a drink 
+  digitalWrite(led, HIGH); 
+
+  Serial.println("in pourDrinks()"); 
+  Serial.println("Preparing to pour: "); 
+  for(int i = 0; i < 4; i++) // Print the amounts to serial monitor (for debugging) 
+  {
+    Serial.print("Drink "); 
+    Serial.print(i); 
+    Serial.print(": "); 
+    Serial.println(order.amounts[i]); 
+  }
+
+
+  // Turn off the delay to indicate the drink is done 
+  delay(1000); // Delay for debugging purposes, remove later 
+  digitalWrite(led, LOW); 
+
+  
+  return 0; 
+}
+
+DrinkOrder parseGetRequest(std::string url)
+{
+  DrinkOrder order; 
   std::string delimiter = "&"; 
   std::string s = url; 
   std::string token = ""; 
   unsigned int position = 0;
   Serial.println("Parsing: ");
   Serial.println(url.c_str()); 
+  int index = 0; 
   while ((position = s.find(delimiter)) != std::string::npos) 
   {
     token = s.substr(0, position);
-    Serial.println(token.c_str());
+//    Serial.println(token.c_str());
+
+    int amountpos = 0; 
+    if( (amountpos = token.find("=")) != std::string::npos)
+    {
+      int amount = std::stoi(token.substr( token.find("=") + 1, 1)); 
+//      Serial.println(amount); 
+      order.amounts[index] = amount; 
+      index++; 
+    }
     s.erase(0, position + delimiter.length());
   }
-  Serial.println("Finished parsing get request"); 
+  
+  // Get the last drink (drink 4): 
+//  Serial.println(s.c_str()); 
+  int amount = std::stoi(s.substr( s.find("=") + 1, 1)); 
+//  Serial.println(amount); 
+  order.amounts[index] = amount; 
+
+  Serial.println("parseGetRequest() parsed drink amounts as: "); 
+  for(int i = 0; i < 4; i++)
+    Serial.println(order.amounts[i]); 
+
+//  Serial.println("Finished parsing get request"); 
+
+  pourDrinks(order); 
+  return order; 
 }
 
 void loop() {
@@ -177,7 +233,7 @@ void loop() {
       if (client.available()) 
       {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
-//        Serial.write(c);                    // print it out to the serial monitor
+        Serial.write(c);                    // print it out to the serial monitor
         if (c == '\n') 
         {                    // if the byte is a newline character
 
@@ -214,20 +270,15 @@ void loop() {
         }
 
         std::string stdCurrentLine(currentLine.c_str()); 
-        std::regex regex_expr("(GET /\\?drink1)=[0-9]&drink2=[0-9]&drink3=[0-9]&drink4=[0-9] HTTP/1.1\r");
-        if(currentLine.startsWith("GET /?"))
+//        std::regex regex_expr("(GET /\\?drink1)=[0-9]&drink2=[0-9]&drink3=[0-9]&drink4=[0-9] HTTP/1.1\r");
+        // Not as exact as using regex matching, 
+        // but regex matching causes noticeable lag, 
+        // since the while loop is for *every character* 
+        // Note that this breaks if any of the drink amounts are two digits (e.g. 10) or if you change labels in the html (drink1, drink2, etc.)
+        if(currentLine.startsWith("GET /?") && currentLine.length() == 41) 
         {
-          
-            if (std::regex_match(stdCurrentLine, regex_expr)) 
-            {
-              Serial.println("Regex match!"); 
-              parseGetRequest(stdCurrentLine); 
-            }
-            else
-            {
-              Serial.println("No regex match for: "); 
-              Serial.println(currentLine); 
-            }
+          Serial.println("\nRECEIVED AN ORDER"); 
+          parseGetRequest(stdCurrentLine); 
         }
 
         
@@ -239,27 +290,6 @@ void loop() {
         if (currentLine.endsWith("GET /L")) 
         {
           digitalWrite(led, LOW);                // GET /L turns the LED off
-        }
-        if (currentLine.endsWith("GET /1-1-1-1")) 
-        {
-//          Serial.println("drink 1"); 
-          digitalWrite(led, HIGH);  // Debugging 
-          // TODO: pour drink 1 into cup 
-        }
-        else if (currentLine.endsWith("GET /1-2-3-4")) 
-        {
-//          Serial.println("drink 2"); 
-          // TODO: pour drink 2 into cup 
-        }
-        else if (currentLine.endsWith("GET /3-3-4-4")) 
-        {
-//          Serial.println("drink 3"); 
-         // TODO: pour drink 3 into cup 
-        }
-        else if (currentLine.endsWith("GET /2-2-3-4"))
-        {
-//          Serial.println("drink 4"); 
-          // TODO: pour drink 4 into cup 
         }
         
       }

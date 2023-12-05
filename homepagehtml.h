@@ -6,29 +6,41 @@ std::string indexhtml = R"(<!DOCTYPE html>
     <head>
       <style>
         body {
-          background-color: powderblue;
+          background-color: azure;
         }
           
         h1 {
-            color: red;
+            color: DarkBlue;
+            font-family: "Gill Sans Extrabold", sans-serif;
           }
+
+        h3 {
+          font-family: Verdana, Geneva, sans-serif;
+        }
         
         p {
           color: black;
+          font-family: Verdana, Geneva, sans-serif;
         }
+
+        #wrapper {
+          width: 100%; 
+          margin: 0 auto; 
+        }
+
+
         </style>
     </head>
     <body>
 
-    <h1>Order Drinks Here</h1>
-    <h3>Welcome! Choose a drink or specify your own:</h3>
+    <div id = "wrapper">
+    <h1>Embedded Mixologist</h1>
+    <h3>Welcome! Choose a drink:</h3>
 
-    Click <a href="/H">here</a> turn the LED on<br>
-    Click <a href="/L">here</a> turn the LED off<br>
-    Click <a href="/1-1-1-1">here</a> for drink 1<br>
-    Click <a href="/1-2-3-4">here</a> for drink 2<br>
-    Click <a href="/3-3-4-4">here</a> for drink 3<br>
-    Click <a href="/2-2-3-4">here</a> for drink 4<br>
+    <p>Click <a href="/?drink1=2&drink2=2&drink3=2&drink4=2">here</a> to order drink 1</p><br>
+    <p>Click <a href="/?drink1=2&drink2=4&drink3=4&drink4=6">here</a> to orderdrink 2</p><br>
+
+    <h3>Or specify your own:</h3>
 
      <form method="get" action="" enctype="text/plain">
         <p>Drink 1:</p>
@@ -83,5 +95,6 @@ std::string indexhtml = R"(<!DOCTYPE html>
         <input type='reset' value='Clear Choices'>
     </form>
 
+    </div> <!-- end #wrapper -->
     </body>
     </html>)"; 
