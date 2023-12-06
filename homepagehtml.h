@@ -51,7 +51,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
 
      <form method="get" action="" enctype="text/plain">
         <p>Drink 1:</p>
-        <input type="radio" id="0" name="drink1" value="0">
+        <input type="radio" id="0" name="drink1" value="0" checked="checked">
         <label for="0">0</label><br>
         <input type="radio" id="2" name="drink1" value="2">
         <label for="2">2</label><br>
@@ -63,7 +63,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
         <br>
 
         <p>Drink 2</p>
-        <input type="radio" id="0" name="drink2" value="0">
+        <input type="radio" id="0" name="drink2" value="0" checked="checked">
         <label for="0">0</label><br>
         <input type="radio" id="2" name="drink2" value="2">
         <label for="2">2</label><br>
@@ -75,7 +75,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
         <br>
 
         <p>Drink 3:</p>
-        <input type="radio" id="0" name="drink3" value="0">
+        <input type="radio" id="0" name="drink3" value="0" checked="checked">
         <label for="0">0</label><br>
         <input type="radio" id="2" name="drink3" value="2">
         <label for="2">2</label><br>
@@ -87,7 +87,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
         <br>
 
         <p>Drink 4:</p>
-        <input type="radio" id="0" name="drink4" value="0">
+        <input type="radio" id="0" name="drink4" value="0" checked="checked">
         <label for="0">0</label><br>
         <input type="radio" id="2" name="drink4" value="2">
         <label for="2">2</label><br>

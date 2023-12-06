@@ -156,9 +156,25 @@ int pourDrinks(DrinkOrder order)
     Serial.println(order.amounts[i]); 
   }
 
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  analogWrite(enC, 255);
+  analogWrite(enD, 255);
 
+  digitalWrite(in1, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in5, HIGH);
+  digitalWrite(in7, HIGH);
+
+  delay(5000);
+
+  digitalWrite(in1, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in5, LOW);
+  digitalWrite(in7, LOW);
+  
   // Turn off the delay to indicate the drink is done 
-  delay(1000); // Delay for debugging purposes, remove later 
+  // delay(1000); // Delay for debugging purposes, remove later 
   digitalWrite(led, LOW); 
 
   
