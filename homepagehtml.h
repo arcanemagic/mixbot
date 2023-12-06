@@ -45,13 +45,17 @@ std::string indexhtml = R"(<!DOCTYPE html>
     <h1>Embedded Mixologist</h1>
     <h3>Welcome! Choose a drink:</h3>
 
-    <p>Click <a href="/?drink1=2&drink2=2&drink3=2&drink4=2">here</a> to order Special #1</p>
-    <p>Click <a href="/?drink1=2&drink2=4&drink3=4&drink4=6">here</a> to order Special #2</p><br>
+    <p>Click <a href="/?drink1=3&drink2=7&drink3=0&drink4=0">here</a> to order a Somaek (Soju + Beer)</p>
+    <p>Click <a href="/?drink1=3&drink2=5&drink3=2&drink4=0">here</a> to order a Somaekite (Soju + Beer + Sprite)</p>
+    <p>Click <a href="/?drink1=0&drink2=6&drink3=0&drink4=4">here</a> to order a Radler (Beer + Lemonade)</p>
+    <p>Click <a href="/?drink1=0&drink2=0&drink3=5&drink4=5">here</a> to order a Fizzylemon (Lemonade + Sprite)</p><br>
+
+
 
     <h3>Or specify your own:</h3>
 
      <form method="get" action="" enctype="text/plain">
-        <p>Drink 1:</p>
+        <p>Drink 1 (Soju):</p>
         <input type="radio" id="0" name="drink1" value="0" checked="checked">
         <label for="0">None</label><br>
         <input type="radio" id="2" name="drink1" value="2">
@@ -63,7 +67,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
 
         <br>
 
-        <p>Drink 2:</p>
+        <p>Drink 2 (Beer):</p>
         <input type="radio" id="0" name="drink2" value="0" checked="checked">
         <label for="0">None</label><br>
         <input type="radio" id="2" name="drink2" value="2">
@@ -75,7 +79,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
 
         <br>
 
-        <p>Drink 3:</p>
+        <p>Drink 3 (Sprite):</p>
         <input type="radio" id="0" name="drink3" value="0" checked="checked">
         <label for="0">None</label><br>
         <input type="radio" id="2" name="drink3" value="2">
@@ -87,7 +91,7 @@ std::string indexhtml = R"(<!DOCTYPE html>
         
         <br>
 
-        <p>Drink 4:</p>
+        <p>Drink 4 (Lemonade):</p>
         <input type="radio" id="0" name="drink4" value="0" checked="checked">
         <label for="0">None</label><br>
         <input type="radio" id="2" name="drink4" value="2">
