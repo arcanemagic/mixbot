@@ -26,18 +26,18 @@
 
 using namespace std;  
 
-// Motor A connections
+// Motor A connections 
 int enA = 9;
-int in1 = 8;
-int in2 = 7;
+int in2 = 8;
+int in1 = 7;
 // Motor B connections
 int enB = 3;
-int in3 = 5;
-int in4 = 4;
+int in4 = 5;
+int in3 = 4;
 // Motor C connections
 int enC = 16;
-int in5 = 15;
-int in6 = 14;
+int in6 = 15;
+int in5 = 14;
 // Motor D connections
 int enD = 19;
 int in7 = 20;
@@ -148,25 +148,80 @@ int pourDrinks(DrinkOrder order)
 
   Serial.println("in pourDrinks()"); 
   Serial.println("Preparing to pour: "); 
+  int max = order.amounts[0]; 
   for(int i = 0; i < 4; i++) // Print the amounts to serial monitor (for debugging) 
   {
     Serial.print("Drink "); 
     Serial.print(i); 
     Serial.print(": "); 
     Serial.println(order.amounts[i]); 
+    if(order.amounts[i] > max)
+      max = order.amounts[i]; 
   }
+  Serial.print("Max is ");
+  Serial.println(max); 
 
   analogWrite(enA, 255);
   analogWrite(enB, 255);
   analogWrite(enC, 255);
   analogWrite(enD, 255);
 
-  digitalWrite(in1, HIGH);
-  digitalWrite(in3, HIGH);
-  digitalWrite(in5, HIGH);
-  digitalWrite(in7, HIGH);
+//  digitalWrite(in1, HIGH);
+//  digitalWrite(in3, HIGH);
+//  digitalWrite(in5, HIGH);
+//  digitalWrite(in7, HIGH);
 
-  delay(5000);
+  int motor1_time = 0; 
+  int motor2_time = 0; 
+  int motor3_time = 0; 
+  int motor4_time = 0; 
+  for(int i = 0; i < 4* max; i++) // Turn on motors for the appropriate durations 
+  {
+    if(motor1_time < 4*order.amounts[0])
+    {
+      digitalWrite(in1, HIGH);// turn on 
+      motor1_time++; 
+    }
+    else
+    {
+      digitalWrite(in1, LOW); //turn off 
+    }
+    
+    if(motor2_time < 4*order.amounts[1])
+    {
+      digitalWrite(in3, HIGH);
+      motor2_time++;
+    }
+    else
+    {
+      digitalWrite(in3, LOW); // turn off 
+    }
+    
+    if(motor3_time < 4*order.amounts[2])
+    {
+      digitalWrite(in5, HIGH);
+      motor3_time++; 
+    }
+    else
+    {
+      digitalWrite(in5, LOW); // turn off 
+    }
+    
+    if(motor4_time < 4*order.amounts[3])
+    {
+      digitalWrite(in7, HIGH);
+      motor4_time++; 
+    }
+    else
+    {
+      digitalWrite(in7, LOW); // turn off 
+    }
+
+    Serial.println("Pouring drinks for one second"); 
+    delay(1000); 
+  }
+
+//  delay(5000);
 
   digitalWrite(in1, LOW);
   digitalWrite(in3, LOW);
